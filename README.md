@@ -3,7 +3,7 @@ Setup an SSH socket with a private key.
 
 ## Inputs
 ### `host`
-**Required** remote hostname
+**Required** Remote hostname
 
 ### `socket-path`
 **Required** Path at which to create socket.
@@ -26,4 +26,4 @@ Path at which socket was created.
 
     - name: Use SSH socket
       run: |
-        ls -l "${{ steps.actiontest.outputs.socket-path }}"
+        ls -l "${{ steps.ssh-socket-action.outputs.socket-path }}"
