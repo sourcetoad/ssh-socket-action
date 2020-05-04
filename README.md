@@ -26,8 +26,7 @@ Path at which socket was created.
         key: BASE64_SECRET_KEY
 
     - name: Use SSH socket
-      run: |
-        ls -l "${{ steps.ssh-socket-action.outputs.socket-path }}"
+      run: ls -l "${{ steps.ssh-socket-action.outputs.socket-path }}"
         
 ## Development
     yarn install
