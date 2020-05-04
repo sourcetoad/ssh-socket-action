@@ -1,0 +1,18 @@
+name: 'SSH Socket Setup'
+description: 'Setup an SSH socket with a private key'
+inputs:
+  host:
+    description: 'remote hostname'
+    require: true
+  socket-path:
+    description: 'path at which to create socket'
+    required: true
+  key:
+    description: 'ssh private key'
+    required: true
+outputs:
+  socket-path:
+    description: 'path at which socket was created'
+runs:
+  using: 'node12'
+  main: 'index.js'
