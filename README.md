@@ -10,7 +10,14 @@ Setup an SSH socket with a private key.
 **Required** Path at which to create socket.
 
 #### `key`
-**Required** SSH private key
+**Required** SSH private key as base64
+
+Base64 encode your key:
+
+    openssl base64 -in {PRIVATE_KEY_FILE} -out {OUTPUT_PRIVATE_KEY_FILE}
+    
+You can store this in your GitHub Secrets to be referenced in your workflow when using this action.
+
 
 ### Outputs
 #### `socket-path`
@@ -23,7 +30,7 @@ Path at which socket was created.
       with:
         host: github.com
         socket-path: /tmp/ssh_agent.sock
-        key: BASE64_SECRET_KEY
+        key: {BASE64_SECRET_KEY}
 
     - name: Use SSH socket
       run: ls -l "${{ steps.ssh-socket-action.outputs.socket-path }}"
