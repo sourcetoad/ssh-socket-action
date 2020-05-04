@@ -15,4 +15,4 @@ outputs:
     description: 'path at which socket was created'
 runs:
   using: 'node12'
-  main: 'index.js'
+  main: 'dist/index.js'
