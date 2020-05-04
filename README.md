@@ -1,24 +1,25 @@
 # SSH Socket Setup GitHub Action
 Setup an SSH socket with a private key.
 
-## Inputs
-### `host`
+## Usage
+### Inputs
+#### `host`
 **Required** Remote hostname
 
-### `socket-path`
+#### `socket-path`
 **Required** Path at which to create socket.
 
-### `key`
+#### `key`
 **Required** SSH private key
 
-## Outputs
-### `socket-path`
+### Outputs
+#### `socket-path`
 Path at which socket was created.
 
-## Example usage
+### Example usage
     - name: SSH Socket Setup
       id: ssh-socket-action
-      uses: ./.github/actions/ssh-sock-setup
+      uses: sourcetoad/ssh-sock-setup
       with:
         host: github.com
         socket-path: /tmp/ssh_agent.sock
@@ -27,3 +28,7 @@ Path at which socket was created.
     - name: Use SSH socket
       run: |
         ls -l "${{ steps.ssh-socket-action.outputs.socket-path }}"
+        
+## Development
+    yarn install
+    ncc build index.js
