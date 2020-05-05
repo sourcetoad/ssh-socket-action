@@ -26,7 +26,7 @@ Path at which socket was created.
 ### Example usage
     - name: SSH Socket Setup
       id: ssh-socket-action
-      uses: sourcetoad/ssh-sock-setup
+      uses: sourcetoad/ssh-socket-action@v1.0.0
       with:
         host: github.com
         socket-path: /tmp/ssh_agent.sock
