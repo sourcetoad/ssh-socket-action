@@ -36,5 +36,14 @@ Path at which socket was created.
       run: ls -l "${{ steps.ssh-socket-action.outputs.socket-path }}"
         
 ## Development
+Make `ncc` available in your build environment:
+
+    npm i -g @zeit/ncc
+    
+Install package dependencies:
+
     yarn install
+    
+Build `dist/index.js`:
+
     ncc build index.js
