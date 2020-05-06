@@ -16,7 +16,7 @@ try {
     );
 } catch (e) {
     console.error(e.message);
-    process.exit();
+    process.exit(1);
 }
 
 console.log(`Created ${socketPath}`);
