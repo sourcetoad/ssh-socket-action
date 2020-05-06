@@ -36,5 +36,22 @@ Path at which socket was created.
       run: ls -l "${{ steps.ssh-socket-action.outputs.socket-path }}"
         
 ## Development
+Make `ncc` available in your build environment:
+
+    npm i -g @zeit/ncc
+    
+Install package dependencies:
+
     yarn install
+    
+Build `dist/index.js`:
+
     ncc build index.js
+
+### Install as Local Action
+For quicker troubleshooting cycles, the action can be copied directly into another project. This way, changes to the action and it's usage can happen simultaneously, in one commit.
+
+1. Copy this repository into your other project as `.github/actions/ssh-socket-action`. Be careful: simply cloning in place will likely install it as a submodule--make sure to copy the files without `.git`
+2. In your other project's workflow, in the action step, set\
+`uses: ./.github/actions/ssh-socket-action`
+3. When making changes to the local action, make sure to rebuild `dist` and commit it
