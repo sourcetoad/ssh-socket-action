@@ -301,6 +301,7 @@ const core = __webpack_require__(68);
 const { execSync } = __webpack_require__(129);
 
 const host = core.getInput('host');
+const port = core.getInput('port');
 const socketPath = core.getInput('socket-path');
 const key = core.getInput('key');
 
@@ -308,19 +309,20 @@ console.log(`Attempting to create ${socketPath}...`);
 try {
     execSync(
         'mkdir ~/.ssh && ' +
-        `ssh-keyscan "${host}" >> ~/.ssh/known_hosts && ` +
+        `ssh-keyscan${port ? ` -p ${port}` : ''} "${host}" >> ~/.ssh/known_hosts && ` +
         `eval $(ssh-agent -a "${socketPath}") && ` +
         `echo "${key}" | base64 -d | ssh-add -`
     );
 } catch (e) {
     console.error(e.message);
-    process.exit();
+    process.exit(1);
 }
 
 console.log(`Created ${socketPath}`);
 core.setOutput('socket-path', socketPath);
 
 console.log('Done; exiting.');
+
 
 /***/ }),
 

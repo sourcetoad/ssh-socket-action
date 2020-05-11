@@ -3,7 +3,10 @@ description: 'Setup an SSH socket with a private key'
 inputs:
   host:
     description: 'remote hostname'
-    require: true
+    required: true
+  port:
+    description: 'ssh port'
+    required: false
   socket-path:
     description: 'path at which to create socket'
     required: true
