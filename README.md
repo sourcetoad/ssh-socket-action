@@ -6,6 +6,11 @@ Setup an SSH socket with a private key.
 #### `host`
 **Required** Remote hostname
 
+#### `port`
+**Optional** SSH port
+
+This is only necessary if the SSH server does not listen on port 22. It is used to retrieve the host key so it can be trusted for host key verification.
+
 #### `socket-path`
 **Required** Path at which to create socket.
 
@@ -29,6 +34,7 @@ Path at which socket was created.
       uses: sourcetoad/ssh-socket-action@v1.0.0
       with:
         host: github.com
+        port: 22 # optional
         socket-path: /tmp/ssh_agent.sock
         key: {BASE64_SECRET_KEY}
 
