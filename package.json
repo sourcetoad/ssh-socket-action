@@ -11,6 +11,6 @@
     "@actions/core": "^1.2.4",
     "@actions/github": "^2.1.1",
     "install": "^0.13.0",
-    "npm": "^6.14.5"
+    "npm": "^6.14.6"
   }
 }
