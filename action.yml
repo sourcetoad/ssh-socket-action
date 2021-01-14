@@ -1,5 +1,10 @@
 name: 'SSH Socket Setup'
 description: 'Setup an SSH socket with a private key'
+author: Sourcetoad
+branding:
+  color: green
+  icon: dollar-sign
+
 inputs:
   host:
     description: 'remote hostname'
