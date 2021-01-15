@@ -13,7 +13,7 @@ Following inputs can be used as `step.with` keys
 | `socket-path` | Yes | String | Path at which to create socket. |
 | `key` | Yes | String | base64 private key |
 
-You can generate a base64 iteration of the private key via:
+You may encode your private key in base64 via:
 
     openssl base64 -in {PRIVATE_KEY_FILE} -out {OUTPUT_PRIVATE_KEY_FILE}
     
