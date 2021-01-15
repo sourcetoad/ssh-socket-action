@@ -3,30 +3,26 @@ Setup an SSH socket with a private key.
 
 ## Usage
 ### Inputs
-#### `host`
-**Required** Remote hostname
 
-#### `port`
-**Optional** SSH port
+Following inputs can be used as `step.with` keys
 
-This is only necessary if the SSH server does not listen on port 22. It is used to retrieve the host key so it can be trusted for host key verification.
+| Name             | Required | Type    | Description                        |
+|------------------|----------|---------|------------------------------------|
+| `host` | Yes | String | Remote hostname. |
+| `port` | No | Number | SSH Port (default: `22`). |
+| `socket-path` | Yes | String | Path at which to create socket. |
+| `key` | Yes | String | base64 private key |
 
-#### `socket-path`
-**Required** Path at which to create socket.
-
-#### `key`
-**Required** SSH private key as base64
-
-Base64 encode your key:
+You can generate a base64 iteration of the private key via:
 
     openssl base64 -in {PRIVATE_KEY_FILE} -out {OUTPUT_PRIVATE_KEY_FILE}
     
-You can store this in your GitHub Secrets to be referenced in your workflow when using this action.
-
+Store that in GitHub Secrets to securely pass to the action.
 
 ### Outputs
-#### `socket-path`
-Path at which socket was created.
+| Name             | Description                  |
+|------------------|------------------------------|
+| `socket-path` | Path at which socket was created |
 
 ### Example usage
     - name: SSH Socket Setup
@@ -36,11 +32,11 @@ Path at which socket was created.
         host: github.com
         port: 22 # optional
         socket-path: /tmp/ssh_agent.sock
-        key: {BASE64_SECRET_KEY}
+        key: ${{ secrets.BASE64_SECRET_KEY }}
 
     - name: Use SSH socket
       run: ls -l "${{ steps.ssh-socket-action.outputs.socket-path }}"
-        
+
 ## Development
 Make `ncc` available in your build environment:
 
@@ -53,6 +49,8 @@ Install package dependencies:
 Build `dist/index.js`:
 
     ncc build index.js
+
+---
 
 ### Install as Local Action
 For quicker troubleshooting cycles, the action can be copied directly into another project. This way, changes to the action and it's usage can happen simultaneously, in one commit.
