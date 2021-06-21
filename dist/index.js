@@ -385,7 +385,7 @@ const key = core.getInput('key');
 console.log(`Attempting to create ${socketPath}...`);
 try {
     execSync(
-        'mkdir ~/.ssh && ' +
+        'mkdir -p ~/.ssh && ' +
         `ssh-keyscan${port ? ` -p ${port}` : ''} "${host}" >> ~/.ssh/known_hosts && ` +
         `eval $(ssh-agent -a "${socketPath}") && ` +
         `echo "${key}" | base64 -d | ssh-add -`
