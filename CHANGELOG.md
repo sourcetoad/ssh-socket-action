@@ -1,3 +1,9 @@
+# v1.1.2 (September 16, 2021)
+ * Support a filesystem with `~/.ssh` already present. (Fixes #19)
+ * Add MIT license
+ * CVE-2021-23343 - Regular Expression Denial of Service
+ * CVE-2021-37713 - Arbitrary File Creation/Overwrite via insufficient symlink protection
+
 # v1.1.1 (January 14, 2021)
  * CVE-2020-15228 - Environment variable injection
  * CVE-2020-8116 - Prototype Pollution

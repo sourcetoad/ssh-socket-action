@@ -1,6 +1,6 @@
 {
   "name": "ssh-socket-action",
-  "version": "1.0.0",
+  "version": "1.1.2",
   "description": "Setup an SSH socket with a private key.",
   "main": "index.js",
   "keywords": [],
