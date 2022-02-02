@@ -6,50 +6,56 @@ Setup an SSH socket with a private key.
 
 Following inputs can be used as `step.with` keys
 
-| Name             | Required | Type    | Description                        |
-|------------------|----------|---------|------------------------------------|
-| `host` | Yes | String | Remote hostname. |
-| `port` | No | Number | SSH Port (default: `22`). |
-| `socket-path` | Yes | String | Path at which to create socket. |
-| `key` | Yes | String | base64 private key |
+| Name          | Required | Type   | Description                     |
+|---------------|----------|--------|---------------------------------|
+| `host`        | Yes      | String | Remote hostname.                |
+| `port`        | No       | Number | SSH Port (default: `22`).       |
+| `socket-path` | Yes      | String | Path at which to create socket. |
+| `key`         | Yes      | String | base64 private key              |
 
 You may encode your private key in base64 via:
 
-    openssl base64 -in {PRIVATE_KEY_FILE} -out {OUTPUT_PRIVATE_KEY_FILE}
+```shell
+openssl base64 -in {PRIVATE_KEY_FILE} -out {OUTPUT_PRIVATE_KEY_FILE}
+```
     
 Store that in GitHub Secrets to securely pass to the action.
 
 ### Outputs
-| Name             | Description                  |
-|------------------|------------------------------|
+| Name          | Description                      |
+|---------------|----------------------------------|
 | `socket-path` | Path at which socket was created |
 
 ### Example usage
-    - name: SSH Socket Setup
-      id: ssh-socket-action
-      uses: sourcetoad/ssh-socket-action@v1.0.0
-      with:
-        host: github.com
-        port: 22 # optional
-        socket-path: /tmp/ssh_agent.sock
-        key: ${{ secrets.BASE64_SECRET_KEY }}
+```yaml
+- name: SSH Socket Setup
+  id: ssh-socket-action
+  uses: sourcetoad/ssh-socket-action@v1.0.0
+  with:
+      host: github.com
+      port: 22 # optional
+      socket-path: /tmp/ssh_agent.sock
+      key: ${{ secrets.BASE64_SECRET_KEY }}
 
-    - name: Use SSH socket
-      run: ls -l "${{ steps.ssh-socket-action.outputs.socket-path }}"
+- name: Use SSH socket
+  run: ls -l "${{ steps.ssh-socket-action.outputs.socket-path }}"
+```
 
 ## Development
 Make `ncc` available in your build environment:
-
-    npm i -g @zeit/ncc
+```shell
+npm i -g @zeit/ncc
+```
     
 Install package dependencies:
-
-    yarn install
+```shell
+yarn install
+```
     
 Build `dist/index.js`:
-
-    ncc build index.js
-
+```shell
+ncc build index.js
+```
 ---
 
 ### Install as Local Action
