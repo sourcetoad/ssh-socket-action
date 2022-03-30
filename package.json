@@ -9,7 +9,9 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.6",
+    "@actions/exec": "^1.1.1",
     "@actions/github": "^2.1.1",
+    "@actions/io": "^1.1.2",
     "install": "^0.13.0",
     "npm": "^6.14.6"
   }
