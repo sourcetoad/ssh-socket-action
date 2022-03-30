@@ -18,6 +18,10 @@ inputs:
   key:
     description: 'ssh private key'
     required: true
+  lifetime_in_seconds:
+    description: 'how many seconds to keep socket live'
+    required: false
+    default: '600'
 outputs:
   socket-path:
     description: 'path at which socket was created'
