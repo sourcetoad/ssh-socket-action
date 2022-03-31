@@ -15,10 +15,9 @@ function executeCommand(command) {
         execSync(command);
     } catch (e) {
         if (e.message.contains('Address already in use')) {
-            console.warn('Agent already exists on sock. Skipping creation.');
+            core.info('Agent already exists on sock. Skipping creation.');
         } else {
-            console.error(e.message);
-            process.exit(1);
+            core.setFailed(e.message);
         }
     }
 }
@@ -31,4 +30,4 @@ executeCommand(`eval $(ssh-agent -a "${socketPath}")`);
 executeCommand(`echo "${key}" | base64 -d | ssh-add -t ${lifetimeInSeconds} -`);
 
 core.setOutput('socket-path', socketPath);
-console.log('Done; exiting.');
+core.info('Done; exiting.');
