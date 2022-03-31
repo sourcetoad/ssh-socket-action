@@ -12,5 +12,8 @@
     "@actions/github": "^2.1.1",
     "install": "^0.13.0",
     "npm": "^6.14.6"
+  },
+  "scripts": {
+    "build": "ncc build index.js --source-map --license licenses.txt"
   }
 }
