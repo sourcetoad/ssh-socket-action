@@ -30,7 +30,5 @@ executeCommand(`ssh-keyscan${port ? ` -p ${port}` : ''} "${host}" >> ~/.ssh/know
 executeCommand(`eval $(ssh-agent -a "${socketPath}")`);
 executeCommand(`echo "${key}" | base64 -d | ssh-add -t ${lifetimeInSeconds} -`);
 
-console.log(`Created ${socketPath}`);
 core.setOutput('socket-path', socketPath);
-
 console.log('Done; exiting.');
