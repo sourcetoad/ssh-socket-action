@@ -10,7 +10,7 @@ const lifetimeInSeconds = core.getInput('lifetime_in_seconds');
 
 console.log(`Attempting to create ${socketPath}...`);
 
-function execSyncAndReturn(command) {
+function execSyncSafelyAndReturn(command) {
     try {
         return execSync(command, {
             encoding: 'utf-8'
@@ -31,8 +31,8 @@ execSync(`sed -i -e '/^${host} /d' ~/.ssh/known_hosts`);
 execSync(`ssh-keyscan${port ? ` -p ${port}` : ''} "${host}" >> ~/.ssh/known_hosts`);
 
 // Start the agent (or re-use one)
-execSync(`ssh-agent -a "${socketPath}"`);
-const pid = execSyncAndReturn(`lsof -Fp ${socketPath} | head -n 1 | sed 's/^p//'`)
+execSyncSafelyAndReturn(`ssh-agent -a "${socketPath}"`);
+const pid = execSyncSafelyAndReturn(`lsof -Fp ${socketPath} | head -n 1 | sed 's/^p//'`)
 core.exportVariable('SSH_AGENT_PID', parseInt(pid));
 core.exportVariable('SSH_AUTH_SOCK', socketPath);
 
