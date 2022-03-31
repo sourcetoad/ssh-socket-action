@@ -2,6 +2,8 @@ const core = require('@actions/core');
 const io = require('@actions/io');
 const exec = require('@actions/exec');
 
+const { execSync } = require('child_process');
+
 const host = core.getInput('host');
 const port = core.getInput('port');
 const socketPath = core.getInput('socket-path');
@@ -18,7 +20,9 @@ async function run() {
 
     core.info('ssh-keyscan: add the provided domain...');
     let portCommand = port ? `-p ${port}` : '';
-    await exec.exec('ssh-keyscan', [portCommand, host, '>> ~/.ssh/known_hosts']);
+
+    // https://github.com/actions/toolkit/issues/346
+    execSync(`ssh-keyscan ${portCommand} ${host} >> ~/.ssh/known_hosts`);
 
     core.info(`Attempting to create if not found. ${socketPath}...`);
     await exec

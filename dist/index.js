@@ -56,6 +56,8 @@ const core = __webpack_require__(310);
 const io = __webpack_require__(954);
 const exec = __webpack_require__(230);
 
+const { execSync } = __webpack_require__(129);
+
 const host = core.getInput('host');
 const port = core.getInput('port');
 const socketPath = core.getInput('socket-path');
@@ -72,13 +74,15 @@ async function run() {
 
     core.info('ssh-keyscan: add the provided domain...');
     let portCommand = port ? `-p ${port}` : '';
-    await exec.exec('ssh-keyscan', [portCommand, host, '>> ~/.ssh/known_hosts']);
+
+    // https://github.com/actions/toolkit/issues/346
+    execSync(`ssh-keyscan ${portCommand} ${host} >> ~/.ssh/known_hosts`);
 
     core.info(`Attempting to create if not found. ${socketPath}...`);
     await exec
         .exec(`eval $(ssh-agent -a "${socketPath}")`)
         .catch(function (reason) {
-            // TODO - Catch specific error
+            core.error(reason);
         });
 
     core.info('Attempting to add key to agent...');
