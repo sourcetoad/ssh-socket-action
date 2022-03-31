@@ -67,7 +67,7 @@ try {
     execSync(
         'mkdir -p ~/.ssh && ' +
         'touch ~/.ssh/known_hosts && ' +
-        `sed -i -e /^${host} /d ~/.ssh/known_hosts && `
+        `sed -i -e '/^${host} /d' ~/.ssh/known_hosts && ` +
         `ssh-keyscan${port ? ` -p ${port}` : ''} "${host}" >> ~/.ssh/known_hosts && ` +
         `eval $(ssh-agent -a "${socketPath}") && ` +
         `echo "${key}" | base64 -d | ssh-add -t ${lifetimeInSeconds} -`
