@@ -40,7 +40,7 @@ module.exports =
 /******/ 	// the startup function
 /******/ 	function startup() {
 /******/ 		// Load entry module and return exports
-/******/ 		return __webpack_require__(464);
+/******/ 		return __webpack_require__(34);
 /******/ 	};
 /******/
 /******/ 	// run startup
@@ -49,21 +49,43 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ 87:
-/***/ (function(module) {
+/***/ 34:
+/***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
-module.exports = require("os");
+const core = __webpack_require__(310);
+
+const { execSync } = __webpack_require__(129);
+
+const host = core.getInput('host');
+const port = core.getInput('port');
+const socketPath = core.getInput('socket-path');
+const key = core.getInput('key');
+const lifetimeInSeconds = core.getInput('lifetime_in_seconds');
+
+console.log(`Attempting to create ${socketPath}...`);
+try {
+    execSync(
+        'mkdir -p ~/.ssh && ' +
+        'touch ~/.ssh/known_hosts && ' +
+        `sed -i -e '/^${host} /d' ~/.ssh/known_hosts`
+        `ssh-keyscan${port ? ` -p ${port}` : ''} "${host}" >> ~/.ssh/known_hosts && ` +
+        `eval $(ssh-agent -a "${socketPath}") && ` +
+        `echo "${key}" | base64 -d | ssh-add -t ${lifetimeInSeconds} -`
+    );
+} catch (e) {
+    console.error(e.message);
+    process.exit(1);
+}
+
+console.log(`Created ${socketPath}`);
+core.setOutput('socket-path', socketPath);
+
+console.log('Done; exiting.');
+
 
 /***/ }),
 
-/***/ 129:
-/***/ (function(module) {
-
-module.exports = require("child_process");
-
-/***/ }),
-
-/***/ 143:
+/***/ 60:
 /***/ (function(__unusedmodule, exports, __webpack_require__) {
 
 "use strict";
@@ -81,7 +103,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const fs = __importStar(__webpack_require__(747));
 const os = __importStar(__webpack_require__(87));
-const utils_1 = __webpack_require__(166);
+const utils_1 = __webpack_require__(96);
 function issueCommand(command, message) {
     const filePath = process.env[`GITHUB_${command}`];
     if (!filePath) {
@@ -99,7 +121,14 @@ exports.issueCommand = issueCommand;
 
 /***/ }),
 
-/***/ 166:
+/***/ 87:
+/***/ (function(module) {
+
+module.exports = require("os");
+
+/***/ }),
+
+/***/ 96:
 /***/ (function(__unusedmodule, exports) {
 
 "use strict";
@@ -125,7 +154,14 @@ exports.toCommandValue = toCommandValue;
 
 /***/ }),
 
-/***/ 208:
+/***/ 129:
+/***/ (function(module) {
+
+module.exports = require("child_process");
+
+/***/ }),
+
+/***/ 310:
 /***/ (function(__unusedmodule, exports, __webpack_require__) {
 
 "use strict";
@@ -147,9 +183,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const command_1 = __webpack_require__(875);
-const file_command_1 = __webpack_require__(143);
-const utils_1 = __webpack_require__(166);
+const command_1 = __webpack_require__(997);
+const file_command_1 = __webpack_require__(60);
+const utils_1 = __webpack_require__(96);
 const os = __importStar(__webpack_require__(87));
 const path = __importStar(__webpack_require__(622));
 /**
@@ -370,39 +406,6 @@ exports.getState = getState;
 
 /***/ }),
 
-/***/ 464:
-/***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
-
-const core = __webpack_require__(208);
-
-const { execSync } = __webpack_require__(129);
-
-const host = core.getInput('host');
-const port = core.getInput('port');
-const socketPath = core.getInput('socket-path');
-const key = core.getInput('key');
-
-console.log(`Attempting to create ${socketPath}...`);
-try {
-    execSync(
-        'mkdir -p ~/.ssh && ' +
-        `ssh-keyscan${port ? ` -p ${port}` : ''} "${host}" >> ~/.ssh/known_hosts && ` +
-        `eval $(ssh-agent -a "${socketPath}") && ` +
-        `echo "${key}" | base64 -d | ssh-add -`
-    );
-} catch (e) {
-    console.error(e.message);
-    process.exit(1);
-}
-
-console.log(`Created ${socketPath}`);
-core.setOutput('socket-path', socketPath);
-
-console.log('Done; exiting.');
-
-
-/***/ }),
-
 /***/ 622:
 /***/ (function(module) {
 
@@ -417,7 +420,7 @@ module.exports = require("fs");
 
 /***/ }),
 
-/***/ 875:
+/***/ 997:
 /***/ (function(__unusedmodule, exports, __webpack_require__) {
 
 "use strict";
@@ -431,7 +434,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const os = __importStar(__webpack_require__(87));
-const utils_1 = __webpack_require__(166);
+const utils_1 = __webpack_require__(96);
 /**
  * Commands
  *
