@@ -13,6 +13,7 @@ async function run() {
     await io.mkdirP('~/.ssh');
 
     core.info(`remove the prior known_hosts for ${host}.`)
+    await exec.exec('touch', ['~/.ssh/known_hosts']);
     await exec.exec('sed', ['-i', '-e', `/^${host} /d`, '~/.ssh/known_hosts']);
 
     core.info('ssh-keyscan: add the provided domain...');
