@@ -12,10 +12,9 @@ console.log(`Attempting to create ${socketPath}...`);
 
 function executeCommand(command) {
     try {
-        return execSync(command, { stdio: 'inherit' }).toString();
+        return execSync(command, { stdio: 'inherit' });
     } catch (e) {
-        core.info(e);
-        if (e.message.contains('Address already in use')) {
+        if (e.message.includes('Address already in use')) {
             core.info('Agent already exists on sock. Skipping creation.');
         } else {
             core.setFailed(e.message);
