@@ -16,9 +16,9 @@ function executeCommand(command) {
             encoding: 'utf-8'
         })
     } catch (e) {
-        core.info(e.message);
         if (e.message.includes('Address already in use')) {
             core.info('Agent already exists on sock. Skipping creation.');
+            executeCommand('SSH_AGENT_PID=4');
         } else {
             core.setFailed(e.message);
         }
@@ -33,13 +33,8 @@ const agentOutput = executeCommand(`ssh-agent -a "${socketPath}"`);
 executeCommand(`echo "${key}" | base64 -d | ssh-add -t ${lifetimeInSeconds} -`);
 
 core.debug(agentOutput);
-const sshAgentPid = executeCommand('echo $SSH_AGENT_PID');
-const sshAgentSock = executeCommand('echo $SSH_AGENT_SOCK');
-
-core.debug(sshAgentPid);
-core.debug(sshAgentSock);
-core.exportVariable('SSH_AGENT_PID', sshAgentPid);
-core.exportVariable('SSH_AGENT_SOCK', sshAgentSock);
+core.exportVariable('SSH_AGENT_PID', executeCommand('echo $SSH_AGENT_PID'));
+core.exportVariable('SSH_AUTH_SOCK', socketPath);
 
 core.setOutput('socket-path', socketPath);
 core.info('Done; exiting.');
