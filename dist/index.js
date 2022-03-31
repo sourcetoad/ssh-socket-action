@@ -68,6 +68,7 @@ function executeCommand(command) {
     try {
         return execSync(command, { stdio: 'inherit' }).toString();
     } catch (e) {
+        core.info(e);
         if (e.message.contains('Address already in use')) {
             core.info('Agent already exists on sock. Skipping creation.');
         } else {
