@@ -29,9 +29,10 @@ executeCommand('mkdir -p ~/.ssh');
 executeCommand('touch ~/.ssh/known_hosts');
 executeCommand(`sed -i -e '/^${host} /d' ~/.ssh/known_hosts`);
 executeCommand(`ssh-keyscan${port ? ` -p ${port}` : ''} "${host}" >> ~/.ssh/known_hosts`);
-executeCommand(`eval $(ssh-agent -a "${socketPath}")`);
+const agentOutput = executeCommand(`ssh-agent -a "${socketPath}"`);
 executeCommand(`echo "${key}" | base64 -d | ssh-add -t ${lifetimeInSeconds} -`);
 
+core.debug(agentOutput);
 const sshAgentPid = executeCommand('echo $SSH_AGENT_PID');
 const sshAgentSock = executeCommand('echo $SSH_AGENT_SOCK');
 
