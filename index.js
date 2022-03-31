@@ -12,7 +12,9 @@ console.log(`Attempting to create ${socketPath}...`);
 
 function executeCommand(command) {
     try {
-        return execSync(command).toString('utf-8');
+        return execSync(command, {
+            encoding: 'utf-8'
+        })
     } catch (e) {
         core.info(e.message);
         if (e.message.includes('Address already in use')) {
