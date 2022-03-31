@@ -29,11 +29,13 @@ executeCommand(`ssh-keyscan${port ? ` -p ${port}` : ''} "${host}" >> ~/.ssh/know
 executeCommand(`eval $(ssh-agent -a "${socketPath}")`);
 executeCommand(`echo "${key}" | base64 -d | ssh-add -t ${lifetimeInSeconds} -`);
 
-core.info(executeCommand('echo $SSH_AGENT_PID'));
-core.info(executeCommand('echo $SSH_AGENT_SOCK'));
+const sshAgentPid = executeCommand('echo $SSH_AGENT_PID');
+const sshAgentSock = executeCommand('echo $SSH_AGENT_SOCK');
 
-core.exportVariable('SSH_AGENT_PID', executeCommand('echo $SSH_AGENT_PID'));
-core.exportVariable('SSH_AGENT_SOCK', executeCommand('echo $SSH_AGENT_SOCK'));
+core.debug(sshAgentPid);
+core.debug(sshAgentSock);
+core.exportVariable('SSH_AGENT_PID', sshAgentPid);
+core.exportVariable('SSH_AGENT_SOCK', sshAgentSock);
 
 core.setOutput('socket-path', socketPath);
 core.info('Done; exiting.');
