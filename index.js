@@ -30,10 +30,12 @@ executeCommand(`eval $(ssh-agent -a "${socketPath}")`);
 executeCommand(`echo "${key}" | base64 -d | ssh-add -t ${lifetimeInSeconds} -`);
 
 executeCommand('echo $SSH_AGENT_PID', function (err, stdout) {
+    core.debug(stdout);
     core.exportVariable('SSH_AGENT_PID', stdout);
 });
 
 executeCommand('echo $SSH_AUTH_SOCK', function (err, stdout) {
+    core.debug(stdout);
     core.exportVariable('SSH_AUTH_SOCK', stdout);
 });
 
