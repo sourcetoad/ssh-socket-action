@@ -10,9 +10,9 @@ const lifetimeInSeconds = core.getInput('lifetime_in_seconds');
 
 console.log(`Attempting to create ${socketPath}...`);
 
-function executeCommand(command, cb = null) {
+function executeCommand(command) {
     try {
-        execSync(command, cb);
+        return execSync(command).toString();
     } catch (e) {
         if (e.message.contains('Address already in use')) {
             core.info('Agent already exists on sock. Skipping creation.');
@@ -29,15 +29,8 @@ executeCommand(`ssh-keyscan${port ? ` -p ${port}` : ''} "${host}" >> ~/.ssh/know
 executeCommand(`eval $(ssh-agent -a "${socketPath}")`);
 executeCommand(`echo "${key}" | base64 -d | ssh-add -t ${lifetimeInSeconds} -`);
 
-executeCommand('echo $SSH_AGENT_PID', function (err, stdout) {
-    core.debug(stdout);
-    core.exportVariable('SSH_AGENT_PID', stdout);
-});
-
-executeCommand('echo $SSH_AUTH_SOCK', function (err, stdout) {
-    core.debug(stdout);
-    core.exportVariable('SSH_AUTH_SOCK', stdout);
-});
+core.exportVariable('SSH_AGENT_PID', executeCommand('echo $SSH_AGENT_PID'));
+core.exportVariable('SSH_AGENT_SOCK', executeCommand('echo $SSH_AGENT_SOCK'));
 
 core.setOutput('socket-path', socketPath);
 core.info('Done; exiting.');
