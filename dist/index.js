@@ -66,9 +66,10 @@ async function run() {
     core.info('checking if ~/.ssh is created...');
     await io.mkdirP('~/.ssh');
 
-    core.info('ssh-keyscan the provided domain (removing the old prior)...');
-    await exec.exec('ssh-keyscan', ['-R', host, '-f ~/.ssh/known_hosts']);
+    core.info(`ssh-keygen: remove the prior known_hosts for ${host}.`)
+    await exec.exec('ssh-keygen', ['-R', host, '-f ~/.ssh/known_hosts']);
 
+    core.info('ssh-keyscan: add the provided domain...');
     let portCommand = port ? `-p ${port}` : '';
     await exec.exec('ssh-keyscan', [portCommand, host, '>> ~/.ssh/known_hosts']);
 
