@@ -9,22 +9,28 @@ const key = core.getInput('key');
 const lifetimeInSeconds = core.getInput('lifetime_in_seconds');
 
 async function run() {
-    console.log('checking if ~/.ssh is created...');
+    core.info('checking if ~/.ssh is created...');
     await io.mkdirP('~/.ssh');
 
-    console.log('ssh-keyscan the provided domain...');
+    core.info('ssh-keyscan the provided domain (removing the old prior)...');
+    await exec.exec('ssh-keyscan', ['-R', host, '-f ~/.ssh/known_hosts']);
+
     let portCommand = port ? `-p ${port}` : '';
-    await exec.exec('ssh-key', [portCommand, host, '>> ~/.ssh/known_hosts']);
+    await exec.exec('ssh-keyscan', [portCommand, host, '>> ~/.ssh/known_hosts']);
 
-    console.log(`Attempting to create if not found. ${socketPath}...`);
-    await exec.exec(`eval $(ssh-agent -a "${socketPath}")`);
+    core.info(`Attempting to create if not found. ${socketPath}...`);
+    await exec
+        .exec(`eval $(ssh-agent -a "${socketPath}")`)
+        .catch(function (reason) {
+            // TODO - Catch specific error
+        });
 
-    console.log('Attempting to add key to agent...');
+    core.info('Attempting to add key to agent...');
     await exec.exec(`echo "${key}" | base64 -d | ssh-add -t ${lifetimeInSeconds} -`);
 
-    console.log(`Created ${socketPath}`);
+    core.info(`Created ${socketPath}`);
     core.setOutput('socket-path', socketPath);
-    console.log('Done; exiting.');
+    core.info('Done; exiting.');
 }
 
 run();
