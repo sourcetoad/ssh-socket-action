@@ -24,7 +24,7 @@ async function run() {
     await exec
         .exec(`eval $(ssh-agent -a "${socketPath}")`)
         .catch(function (reason) {
-            // TODO - Catch specific error
+            core.error(reason);
         });
 
     core.info('Attempting to add key to agent...');
