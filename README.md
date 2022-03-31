@@ -6,12 +6,13 @@ Setup an SSH socket with a private key.
 
 Following inputs can be used as `step.with` keys
 
-| Name          | Required | Type   | Description                     |
-|---------------|----------|--------|---------------------------------|
-| `host`        | Yes      | String | Remote hostname.                |
-| `port`        | No       | Number | SSH Port (default: `22`).       |
-| `socket-path` | Yes      | String | Path at which to create socket. |
-| `key`         | Yes      | String | base64 private key              |
+| Name          | Required | Type   | Description                        |
+|---------------|----------|--------|------------------------------------|
+| `host`        | Yes      | String | Remote hostname.                   |
+| `port`        | No       | Number | SSH Port (default: `22`).          |
+| `socket-path` | Yes      | String | Path at which to create socket.    |
+| `key`         | Yes      | String | base64 private key                 |
+| `lifetime`    | No       | Number | Seconds to keep key (default: 600) |
 
 You may encode your private key in base64 via:
 
@@ -25,6 +26,7 @@ Store that in GitHub Secrets to securely pass to the action.
 | Name          | Description                      |
 |---------------|----------------------------------|
 | `socket-path` | Path at which socket was created |
+| `agent-pid`   | SSH Agent PID.                   |
 
 ### Example usage
 ```yaml
@@ -44,7 +46,7 @@ Store that in GitHub Secrets to securely pass to the action.
 ## Development
 Make `ncc` available in your build environment:
 ```shell
-npm i -g @zeit/ncc
+npm i -g @vercel/ncc
 ```
     
 Install package dependencies:
