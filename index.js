@@ -10,20 +10,6 @@ const lifetimeInSeconds = core.getInput('lifetime');
 
 console.log(`Attempting to create ${socketPath}...`);
 
-function execSyncSafelyAndReturn(command) {
-    try {
-        return execSync(command, {
-            encoding: 'utf-8'
-        })
-    } catch (e) {
-        if (e.message.includes('Address already in use')) {
-            core.info('Agent already exists on sock. Skipping creation.');
-        } else {
-            core.setFailed(e.message);
-        }
-    }
-}
-
 // Prepare the host file.
 execSync('mkdir -p ~/.ssh');
 execSync('touch ~/.ssh/known_hosts');
@@ -31,8 +17,18 @@ execSync(`sed -i -e '/^${host} /d' ~/.ssh/known_hosts`);
 execSync(`ssh-keyscan${port ? ` -p ${port}` : ''} "${host}" >> ~/.ssh/known_hosts`);
 
 // Start the agent (or re-use one)
-execSyncSafelyAndReturn(`ssh-agent -a "${socketPath}"`);
-const pid = execSyncSafelyAndReturn(`lsof -Fp ${socketPath} | head -n 1 | sed 's/^p//'`)
+try {
+    execSync(`ssh-agent -a "${socketPath}"`, {encoding: 'utf-8'})
+} catch (e) {
+    if (e.message.includes('Address already in use')) {
+        core.info('Agent already exists on sock. Skipping creation.');
+    } else {
+        core.setFailed(e.message);
+    }
+}
+
+// Pluck the pid and set values
+const pid = execSync(`lsof -Fp ${socketPath} | head -n 1 | sed 's/^p//'`, {encoding: 'utf-8'})
 core.exportVariable('SSH_AGENT_PID', parseInt(pid));
 core.exportVariable('SSH_AUTH_SOCK', socketPath);
 
