@@ -490,21 +490,25 @@ try {
     execSync(`ssh-agent -a "${socketPath}"`)
 } catch (e) {
     if (e.message.includes('Address already in use')) {
-        core.info('Agent already exists on sock. Skipping creation.');
+        core.warning('Agent already exists on sock. Skipping creation.');
     } else {
         core.setFailed(e.message);
     }
 }
 
-// Pluck the pid and set values
-const pid = parseInt(execSync(`fuser ${socketPath} 2> /dev/null`, {encoding: 'utf-8'}));
-core.exportVariable('SSH_AGENT_PID', pid);
-core.exportVariable('SSH_AUTH_SOCK', socketPath);
+// Pluck the pid and set values (if possible)
+try {
+    const pid = parseInt(execSync(`fuser ${socketPath} 2> /dev/null`, {encoding: 'utf-8'}));
+    core.exportVariable('SSH_AGENT_PID', pid);
+    core.setOutput('agent-pid', pid);
+} catch (e) {
+    core.warning('PID capture failed (fuser). Skipping...');
+}
 
 // Add the key and set outputs
-execSync(`echo "${key}" | base64 -d | ssh-add -t ${lifetimeInSeconds} -`);
+core.exportVariable('SSH_AUTH_SOCK', socketPath);
 core.setOutput('socket-path', socketPath);
-core.setOutput('agent-pid', pid);
+execSync(`echo "${key}" | base64 -d | ssh-add -t ${lifetimeInSeconds} -`);
 core.info('Done; exiting.');
 
 })();
