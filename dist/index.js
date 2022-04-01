@@ -497,14 +497,14 @@ try {
 }
 
 // Pluck the pid and set values
-const pid = execSync(`lsof -Fp ${socketPath} | head -n 1 | sed 's/^p//'`, {encoding: 'utf-8'})
-core.exportVariable('SSH_AGENT_PID', parseInt(pid));
+const pid = parseInt(execSync(`lsof -Fp ${socketPath} | head -n 1 | sed 's/^p//'`, {encoding: 'utf-8'}));
+core.exportVariable('SSH_AGENT_PID', pid);
 core.exportVariable('SSH_AUTH_SOCK', socketPath);
 
 // Add the key and set outputs
 execSync(`echo "${key}" | base64 -d | ssh-add -t ${lifetimeInSeconds} -`);
 core.setOutput('socket-path', socketPath);
-core.setOutput('agent-pid', parseInt(pid));
+core.setOutput('agent-pid', pid);
 core.info('Done; exiting.');
 
 })();
