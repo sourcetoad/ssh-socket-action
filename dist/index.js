@@ -497,7 +497,7 @@ try {
 }
 
 // Pluck the pid and set values
-const pid = parseInt(execSync(`lsof -Fp ${socketPath} | head -n 1 | sed 's/^p//'`, {encoding: 'utf-8'}));
+const pid = parseInt(execSync(`fuser ${socketPath} 2> /dev/null`, {encoding: 'utf-8'}));
 core.exportVariable('SSH_AGENT_PID', pid);
 core.exportVariable('SSH_AUTH_SOCK', socketPath);
 
