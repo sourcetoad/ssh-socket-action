@@ -18,7 +18,7 @@ execSync(`ssh-keyscan${port ? ` -p ${port}` : ''} "${host}" >> ~/.ssh/known_host
 
 // Start the agent (or re-use one)
 try {
-    execSync(`ssh-agent -a "${socketPath}"`, {encoding: 'utf-8'})
+    execSync(`ssh-agent -a "${socketPath}"`)
 } catch (e) {
     if (e.message.includes('Address already in use')) {
         core.info('Agent already exists on sock. Skipping creation.');
@@ -28,7 +28,7 @@ try {
 }
 
 // Pluck the pid and set values
-const pid = parseInt(execSync(`lsof -Fp ${socketPath} | head -n 1 | sed 's/^p//'`, {encoding: 'utf-8'}));
+const pid = parseInt(execSync(`fuser ${socketPath} 2> /dev/null`, {encoding: 'utf-8'}));
 core.exportVariable('SSH_AGENT_PID', pid);
 core.exportVariable('SSH_AUTH_SOCK', socketPath);
 
