@@ -487,7 +487,7 @@ execSync(`ssh-keyscan${port ? ` -p ${port}` : ''} "${host}" >> ~/.ssh/known_host
 
 // Start the agent (or re-use one)
 try {
-    execSync(`ssh-agent -a "${socketPath}"`, {encoding: 'utf-8'})
+    execSync(`ssh-agent -a "${socketPath}"`)
 } catch (e) {
     if (e.message.includes('Address already in use')) {
         core.info('Agent already exists on sock. Skipping creation.');
