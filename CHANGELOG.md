@@ -1,3 +1,14 @@
+# v1.2.0 (April 4, 2022)
+ * CVE-2020-7598 - Prototype Pollution.
+ * CVE-2022-0235 - Sensitive Information exposure.
+ * Introduce `lifetime` parameter to expire key.
+ * Support Self Runners
+ * Cleanups `known_hosts` (of selected domain) prior to adding entries.
+ * Upgrade to Node16
+ * Swapped `ncc` package to `@vercel/ncc` and included source maps + licenses.
+ * Expose `SSH_AGENT_PID` if possible to obtain.
+ * Expose `SSH_AUTH_SOCK` to location of `ssh-agent` sock file.
+
 # v1.1.2 (September 16, 2021)
  * Support a filesystem with `~/.ssh` already present. (Fixes #19)
  * Add MIT license
