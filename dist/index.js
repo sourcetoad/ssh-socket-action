@@ -490,7 +490,7 @@ try {
     execSync(`ssh-agent -a "${socketPath}"`)
 } catch (e) {
     if (e.message.includes('Address already in use')) {
-        core.warning('Agent already exists on sock. Skipping creation.');
+        core.info('Agent already exists on sock. Skipping creation.');
     } else {
         core.setFailed(e.message);
     }
