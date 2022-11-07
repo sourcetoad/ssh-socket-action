@@ -1,3 +1,7 @@
+# v1.2.1 (November 7, 2022)
+ * Adjust message severity to INFO for message.
+ * Bump actions/core to latest for --set-output deprecation.
+
 # v1.2.0 (April 4, 2022)
  * CVE-2020-7598 - Prototype Pollution.
  * CVE-2022-0235 - Sensitive Information exposure.
