@@ -1,0 +1,22 @@
+name: ci
+on: push
+
+jobs:
+  update:
+    runs-on: ubuntu-22.04
+    name: Node 16
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: yarn install
+        run: yarn install
+
+      - name: yarn install
+        run: yarn build
