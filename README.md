@@ -44,11 +44,6 @@ Store that in GitHub Secrets to securely pass to the action.
 ```
 
 ## Development
-Make `ncc` available in your build environment:
-```shell
-npm i -g @vercel/ncc
-```
-    
 Install package dependencies:
 ```shell
 yarn install
