@@ -10,7 +10,7 @@ Following inputs can be used as `step.with` keys
 |---------------|----------|--------|------------------------------------|
 | `host`        | Yes      | String | Remote hostname.                   |
 | `port`        | No       | Number | SSH Port (default: `22`).          |
-| `socket-path` | Yes      | String | Path at which to create socket.    |
+| `socket-path` | No       | String | Path at which to create socket.    |
 | `key`         | Yes      | String | base64 private key                 |
 | `lifetime`    | No       | Number | Seconds to keep key (default: 600) |
 
