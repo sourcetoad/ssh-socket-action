@@ -1,5 +1,8 @@
-name: ci
-on: push
+name: dist
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   update:
