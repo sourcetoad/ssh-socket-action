@@ -6,6 +6,8 @@ on:
 
 jobs:
   update:
+    permissions:
+      contents: write
     runs-on: ubuntu-22.04
     name: Commit Dist
 
