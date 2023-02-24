@@ -4,7 +4,7 @@ const { execSync } = require('child_process');
 
 const host = core.getInput('host');
 const port = core.getInput('port');
-const socketPath = core.getInput('socket-path') ?? execSync('mktemp 2> /dev/null', {encoding: 'utf-8'});
+const socketPath = core.getInput('socket-path') || execSync('mktemp 2> /dev/null', {encoding: 'utf-8'});
 const key = core.getInput('key');
 const lifetimeInSeconds = core.getInput('lifetime');
 

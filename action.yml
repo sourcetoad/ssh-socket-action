@@ -15,6 +15,7 @@ inputs:
   socket-path:
     description: 'path at which to create socket'
     required: false
+    default: ''
   key:
     description: 'ssh private key'
     required: true
