@@ -8,8 +8,6 @@ const socketPath = core.getInput('socket-path');
 const key = core.getInput('key');
 const lifetimeInSeconds = core.getInput('lifetime');
 
-console.log(`Attempting to create ${socketPath}...`);
-
 // Create random socket path, if none passed.
 if (!socketPath) {
     try {
@@ -19,6 +17,8 @@ if (!socketPath) {
         process.exit(1);
     }
 }
+
+console.log(`Attempting to create ${socketPath}...`);
 
 // Prepare the host file.
 execSync('mkdir -p ~/.ssh');
