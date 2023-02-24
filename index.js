@@ -4,14 +4,14 @@ const { execSync } = require('child_process');
 
 const host = core.getInput('host');
 const port = core.getInput('port');
-const socketPath = core.getInput('socket-path');
 const key = core.getInput('key');
 const lifetimeInSeconds = core.getInput('lifetime');
+let socketPath = core.getInput('socket-path');
 
 // Create random socket path, if none passed.
 if (!socketPath) {
     try {
-        execSync('mktemp -u', {encoding: 'utf-8'})
+        socketPath = execSync('mktemp -u', {encoding: 'utf-8'})
     } catch (e) {
         core.setFailed(e.message);
         process.exit(1);
