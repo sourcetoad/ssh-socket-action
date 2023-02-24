@@ -18,3 +18,24 @@ jobs:
       - run: yarn install
 
       - run: yarn build
+
+      - name: Test Itself (Random Socket)
+        id: ssh-socket-action-random
+        uses: ./
+        with:
+          host: github.com
+          key: ${{ secrets.BASE64_INTENTIONAL_EXAMPLE_PUBLIC_SECRET_KEY }}
+
+      - name: Use SSH socket (Random Socket)
+        run: ls -l "${{ steps.ssh-socket-action-random.outputs.socket-path }}"
+
+      - name: Test Itself (Specified Socket)
+        id: ssh-socket-action-specified
+        uses: ./
+        with:
+          host: github.com
+          socket-path: 'tmp/test.sock'
+          key: ${{ secrets.BASE64_INTENTIONAL_EXAMPLE_PUBLIC_SECRET_KEY }}
+
+      - name: Use SSH socket (Specified Socket)
+        run: ls -l "${{ steps.ssh-socket-action-specified.outputs.socket-path }}"
