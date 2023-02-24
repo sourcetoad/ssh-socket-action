@@ -34,7 +34,7 @@ jobs:
         uses: ./
         with:
           host: github.com
-          socket-path: 'tmp/test.sock'
+          socket-path: '/tmp/ssh_agent.sock'
           key: ${{ secrets.BASE64_INTENTIONAL_EXAMPLE_PUBLIC_SECRET_KEY }}
 
       - name: Use SSH socket (Specified Socket)
