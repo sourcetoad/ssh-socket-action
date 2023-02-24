@@ -11,7 +11,7 @@ let socketPath = core.getInput('socket-path');
 // Create random socket path, if none passed.
 if (!socketPath) {
     try {
-        socketPath = execSync('mktemp -u', {encoding: 'utf-8'})
+        socketPath = execSync('mktemp -u', {encoding: 'utf-8'}).trim();
     } catch (e) {
         core.setFailed(e.message);
         process.exit(1);
