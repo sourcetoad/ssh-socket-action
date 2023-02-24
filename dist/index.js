@@ -2831,9 +2831,19 @@ const { execSync } = __nccwpck_require__(81);
 
 const host = core.getInput('host');
 const port = core.getInput('port');
-const socketPath = core.getInput('socket-path');
 const key = core.getInput('key');
 const lifetimeInSeconds = core.getInput('lifetime');
+let socketPath = core.getInput('socket-path');
+
+// Create random socket path, if none passed.
+if (!socketPath) {
+    try {
+        socketPath = execSync('mktemp -u', {encoding: 'utf-8'}).trim();
+    } catch (e) {
+        core.setFailed(e.message);
+        process.exit(1);
+    }
+}
 
 console.log(`Attempting to create ${socketPath}...`);
 
@@ -2851,6 +2861,7 @@ try {
         core.info('Agent already exists on sock. Skipping creation.');
     } else {
         core.setFailed(e.message);
+        process.exit(1);
     }
 }
 
