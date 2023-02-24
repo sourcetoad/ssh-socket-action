@@ -24,6 +24,7 @@ try {
         core.info('Agent already exists on sock. Skipping creation.');
     } else {
         core.setFailed(e.message);
+        process.exit(1);
     }
 }
 
