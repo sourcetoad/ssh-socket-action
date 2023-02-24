@@ -10,7 +10,7 @@ Following inputs can be used as `step.with` keys
 |---------------|----------|--------|------------------------------------|
 | `host`        | Yes      | String | Remote hostname.                   |
 | `port`        | No       | Number | SSH Port (default: `22`).          |
-| `socket-path` | Yes      | String | Path at which to create socket.    |
+| `socket-path` | No       | String | Path at which to create socket.    |
 | `key`         | Yes      | String | base64 private key                 |
 | `lifetime`    | No       | Number | Seconds to keep key (default: 600) |
 
@@ -32,11 +32,11 @@ Store that in GitHub Secrets to securely pass to the action.
 ```yaml
 - name: SSH Socket Setup
   id: ssh-socket-action
-  uses: sourcetoad/ssh-socket-action@v1.0.0
+  uses: sourcetoad/ssh-socket-action@v1
   with:
       host: github.com
       port: 22 # optional
-      socket-path: /tmp/ssh_agent.sock
+      socket-path: /tmp/ssh_agent.sock # optional
       key: ${{ secrets.BASE64_SECRET_KEY }}
 
 - name: Use SSH socket
