@@ -32,11 +32,11 @@ Store that in GitHub Secrets to securely pass to the action.
 ```yaml
 - name: SSH Socket Setup
   id: ssh-socket-action
-  uses: sourcetoad/ssh-socket-action@v1.0.0
+  uses: sourcetoad/ssh-socket-action@v1
   with:
       host: github.com
       port: 22 # optional
-      socket-path: /tmp/ssh_agent.sock
+      socket-path: /tmp/ssh_agent.sock # optional
       key: ${{ secrets.BASE64_SECRET_KEY }}
 
 - name: Use SSH socket
