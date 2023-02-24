@@ -4,11 +4,21 @@ const { execSync } = require('child_process');
 
 const host = core.getInput('host');
 const port = core.getInput('port');
-const socketPath = core.getInput('socket-path') || execSync('mktemp -u 2> /dev/null', {encoding: 'utf-8'});
+const socketPath = core.getInput('socket-path');
 const key = core.getInput('key');
 const lifetimeInSeconds = core.getInput('lifetime');
 
 console.log(`Attempting to create ${socketPath}...`);
+
+// Create random socket path, if none passed.
+if (!socketPath) {
+    try {
+        execSync('mktemp -u', {encoding: 'utf-8'})
+    } catch (e) {
+        core.setFailed(e.message);
+        process.exit(1);
+    }
+}
 
 // Prepare the host file.
 execSync('mkdir -p ~/.ssh');
