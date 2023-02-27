@@ -1,3 +1,8 @@
+# v1.3.0 (February 27, 2023)
+ * CVE-2022-38900 - DoS
+ * Introduce automated CI pipeline to test itself
+ * Create random sock file location if none passed.
+
 # v1.2.1 (November 7, 2022)
  * Adjust message severity to INFO for message.
  * Bump actions/core to latest for --set-output deprecation.
