@@ -1,3 +1,6 @@
+# v1.4.0 (February 5, 2024)
+ * Support existing ssh-agents.
+
 # v1.3.0 (February 27, 2023)
  * CVE-2022-38900 - DoS
  * Introduce automated CI pipeline to test itself
