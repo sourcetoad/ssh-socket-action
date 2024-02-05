@@ -23,6 +23,10 @@ inputs:
     description: 'how many seconds to keep socket live'
     required: false
     default: '600'
+  purge-entry:
+    description: 'Whether to purge the host entry from known_hosts prior to addition.'
+    required: false
+    default: 'true'
 outputs:
   socket-path:
     description: 'path at which socket was created'

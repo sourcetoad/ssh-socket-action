@@ -1,18 +1,19 @@
 # SSH Socket Setup GitHub Action
-Setup an SSH socket with a private key.
+_Set up (or re-use) an SSH socket with a private key._
 
 ## Usage
 ### Inputs
 
 Following inputs can be used as `step.with` keys
 
-| Name          | Required | Type   | Description                        |
-|---------------|----------|--------|------------------------------------|
-| `host`        | Yes      | String | Remote hostname.                   |
-| `port`        | No       | Number | SSH Port (default: `22`).          |
-| `socket-path` | No       | String | Path at which to create socket.    |
-| `key`         | Yes      | String | base64 private key                 |
-| `lifetime`    | No       | Number | Seconds to keep key (default: 600) |
+| Name          | Required | Type    | Description                                        |
+|---------------|----------|---------|----------------------------------------------------|
+| `host`        | Yes      | String  | Remote hostname.                                   |
+| `port`        | No       | Number  | SSH Port (default: `22`).                          |
+| `socket-path` | No       | String  | Path at which to create socket.                    |
+| `key`         | Yes      | String  | base64 private key                                 |
+| `lifetime`    | No       | Number  | Seconds to keep key (default: 600)                 |
+| `purge-entry` | No       | Boolean | Purge `known_hosts` entry for host (default: true) |
 
 You may encode your private key in base64 via:
 
