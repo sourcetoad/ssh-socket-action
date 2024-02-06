@@ -4,7 +4,7 @@ on: push
 jobs:
   update:
     runs-on: ubuntu-22.04
-    name: Node 16
+    name: Node 20
 
     steps:
       - name: Checkout code
@@ -12,7 +12,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
           cache: 'yarn'
 
       - run: yarn install
