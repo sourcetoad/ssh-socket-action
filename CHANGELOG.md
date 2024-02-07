@@ -1,3 +1,7 @@
+# v1.4.1 (February 7, 2024)
+ * Upgrade action to node20.
+ * Upgrade actions to non-deprecated versions.
+
 # v1.4.0 (February 5, 2024)
  * Support existing ssh-agents.
 
