@@ -26649,7 +26649,7 @@ if (pid) {
         core.exportVariable('SSH_AGENT_PID', pid);
         core.setOutput('agent-pid', pid);
     } catch (e) {
-        core.warning('PID capture failed (fuser). Skipping...');
+        core.info('PID capture failed (fuser). Skipping...');
     }
 
     core.exportVariable('SSH_AUTH_SOCK', socketPath);
