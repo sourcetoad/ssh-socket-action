@@ -1,3 +1,7 @@
+# v1.4.2 (September 16, 2024)
+ * Upgrade actions to non-deprecated versions.
+ * Treat socket not found as info (not warning) as expected.
+
 # v1.4.1 (February 7, 2024)
  * Upgrade action to node20.
  * Upgrade actions to non-deprecated versions.
