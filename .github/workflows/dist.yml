@@ -8,7 +8,7 @@ jobs:
   update:
     permissions:
       contents: write
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     name: Commit Dist
 
     steps:
@@ -17,12 +17,12 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'yarn'
+          node-version: 22
+          cache: 'npm'
 
-      - run: yarn install
+      - run: npm ci
 
-      - run: yarn build
+      - run: npm run build
 
       - name: Commit updated dist
         uses: stefanzweifel/git-auto-commit-action@v5
