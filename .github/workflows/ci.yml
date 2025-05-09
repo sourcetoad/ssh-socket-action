@@ -4,7 +4,7 @@ on: push
 jobs:
   update:
     runs-on: ubuntu-22.04
-    name: Node 20
+    name: Node 22
 
     steps:
       - name: Checkout code
@@ -12,12 +12,12 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'yarn'
+          node-version: 22
+          cache: 'npm'
 
-      - run: yarn install
+      - run: npm ci
 
-      - run: yarn build
+      - run: npm run build
 
       - name: Test Itself (Random Socket)
         id: ssh-socket-action-random

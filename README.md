@@ -47,12 +47,12 @@ Store that in GitHub Secrets to securely pass to the action.
 ## Development
 Install package dependencies:
 ```shell
-yarn install
+npm install
 ```
     
 Build `dist/index.js`:
 ```shell
-ncc build index.js
+npm run build
 ```
 ---
 
