@@ -4,7 +4,7 @@ on: push
 jobs:
   update:
     runs-on: ubuntu-22.04
-    name: Node 22
+    name: Node 24
 
     steps:
       - name: Checkout code
@@ -12,7 +12,7 @@ jobs:
 
       - uses: actions/setup-node@v5
         with:
-          node-version: 22
+          node-version: 24
           cache: 'npm'
 
       - run: npm ci
