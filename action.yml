@@ -31,5 +31,5 @@ outputs:
   socket-path:
     description: 'path at which socket was created'
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'dist/index.js'
