@@ -1,9 +1,9 @@
-const core = require('@actions/core');
-const { execSync } = require('child_process');
+import * as core from '@actions/core';
+import { execSync } from 'node:child_process';
 
-const host = core.getInput('host');
+const host = core.getInput('host', { required: true });
 const port = core.getInput('port');
-const key = core.getInput('key');
+const key = core.getInput('key', { required: true });
 const lifetimeInSeconds = core.getInput('lifetime');
 const shouldPurgeEntry = core.getBooleanInput('purge-entry', {required: false});
 let socketPath = core.getInput('socket-path');
