@@ -1,3 +1,8 @@
+# v1.5.0 (March 16, 2026)
+ * Move action to node24.
+ * Upgrade dependencies.
+ * Move to npm (from yarn).
+
 # v1.4.2 (September 16, 2024)
  * Upgrade actions to non-deprecated versions.
  * Treat socket not found as info (not warning) as expected.
